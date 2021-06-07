@@ -2,6 +2,7 @@ import type {
   ThrowableErrorConstructorArguments,
   DefaultConstructorGeneratorReturn,
   ThrowableErrorConstructor,
+  OmitFromThrowableErrorForExtends
 } from './types';
 
 export class ThrowableError<N> extends Error {
@@ -16,13 +17,88 @@ export class ThrowableError<N> extends Error {
   message: string;
 }
 
-type OmitFromThrowableErrorForExtends = 'captureStackTrace' | 'stackTraceLimit';
+export type ExtendFromType<N, A extends [] = any> = Omit<  
+  typeof ThrowableError,  
+  OmitFromThrowableErrorForExtends  
+> &  
+  ThrowableErrorConstructor<A, ThrowableError<N>>;  
 
-type ExtendFromType<N, A extends [] = any> = Omit<
-  typeof ThrowableError,
-  OmitFromThrowableErrorForExtends
-> &
-  ThrowableErrorConstructor<A, ThrowableError<N>>;
+type MapperFunctionType<CGR, A extends [] = any> = (...args: A) => CGR;
+
+/**
+ * Get an efficient, multi-inheritant, dynamically-generated,
+ * Error pseudo-class with instanceof super-powers.
+ *
+ * @typeParam N - Name for the new Error.
+ * @typeParam A - Constructor arguments.
+ * @typeParam CGR - Return type of the mapperFn argument.
+ * 
+ * @param name {string} Class name.
+ * @param mapperFn {MapperFunctionType} Mapper function for the constructor arguments.
+ * @param extendFrom {class} Class to extend from. Defaults to `ThrowableError`.
+ *
+ * @returns The new Error pseudo-class.
+ *
+ * @example
+ *
+ * Simple example: 
+ * 
+ * ```javascript
+ * const WebSocketError = getThrowableError('WebSocketError',
+ *   (userMessage: string, details?: { originalError?: Error }) => ({
+ *     userMessage,
+ *     originalError: details?.originalError || undefined,
+ *   }),
+ * );
+ * ```
+ * 
+ * Inheritant example: 
+ * 
+ * ```javascript
+ * const WebSocketJSONError = getThrowableError<'WebSocketJSONError',ThrowableErrorConstructorArguments & [string, { data: any }]
+ *   >('WebSocketJSONError',
+ *  (userMessage: string, details?: { originalError?: Error; data?: any }) => ({
+ *    userMessage,
+ *    originalError: details?.originalError || undefined,
+ *    data: details?.data || undefined,
+ *  }),
+ *  WebSocketError,
+ * );
+ * ```
+ *
+ * 
+ * Throwing these errors is straightforward
+ * 
+ * ```javascript
+ * throw new WebSocketError('Unable to connect');
+ * 
+ * throw new WebSocketError('Unable to connect', {
+ *   originalError: new Error('test')
+ * });
+ * 
+ * throw new WebSocketJSONError('Unable to parse content');
+ * 
+ * throw new WebSocketJSONError('Unable to parse content', { originalError: new Error('test') });
+ * 
+ * throw new WebSocketJSONError('Unable to parse content', {
+ *   data: '1234errorjsoncontent',
+ *   originalError: new Error('test')
+ * });
+ * ```
+ * 
+ * Instanceof properties:
+ * 
+ * ```javascript
+ * import {ThrowableError} from 'throwable-error';
+ * 
+ * const testErr = new WebSocketJSONError('test');
+ * 
+ * console.log(testErr instanceof WebSocketJSONError); # true
+ * console.log(testErr instanceof WebSocketError); # true
+ * console.log(testErr instanceof ThrowableError); # true
+ * ```
+ * 
+ */
 
 export const getThrowableError = <
   N extends string = string,
@@ -30,7 +106,7 @@ export const getThrowableError = <
   CGR extends DefaultConstructorGeneratorReturn = DefaultConstructorGeneratorReturn,
 >(
   name: N,
-  fn: (...args: A) => CGR,
+  mapperFn: MapperFunctionType<CGR>,
   extendFrom: ExtendFromType<any> = ThrowableError,
 ): ThrowableErrorConstructor<A, ThrowableError<N>> => {
   const e = new extendFrom();
@@ -45,7 +121,7 @@ export const getThrowableError = <
     Error.call(this);
     Object.defineProperty(this, 'name', { value: name });
 
-    const cc = fn(...args);
+    const cc = mapperFn(...args);
     for (const ck in cc) {
       const keynam: string = ck === 'userMessage' ? 'message' : ck;
       // eslint-disable-next-line security/detect-object-injection

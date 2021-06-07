@@ -10,3 +10,7 @@ export interface DefaultConstructorGeneratorReturn {
 export type ThrowableErrorConstructor<A extends any[], C> = new (
   ...args: A
 ) => C;
+
+export type OmitFromThrowableErrorForExtends =
+  | 'captureStackTrace'
+  | 'stackTraceLimit';
