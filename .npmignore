@@ -1,0 +1,5 @@
+docs/
+docs-md/
+node_modules/
+package-lock.json
+.rollup.cache
