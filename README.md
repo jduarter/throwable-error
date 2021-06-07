@@ -1,6 +1,10 @@
 # throwable-error
 🧨 Efficient, multi-inheritant, dynamically-generated, Error pseudo-classes with instanceof super-powers.
 
+This project is compatible with Typescript but can be used both as an ES module or CJS module.
+
+The API is still very complex and needs to be simplified, but it's effectively working for my purposes.
+
 ## Notice
 
 This project is in beta stage, major API modifications and simplifications are very likely to occur on next major releases.
@@ -12,6 +16,12 @@ npm install --save throwable-error
 ```
 
 ## Usage
+
+### Main concept.
+
+- Errors are generally defined in the main scope of the application.
+- You can use the `getThrowableError` method to generate a pseudo-class by providing an `errorName` and a `mapperFunction`.
+- The `mapperFunction` basically receives the new Error constructor arguments and returns them with the proper internal object structure the Error will have: The "inner" constructor of this library will incorporate returned values as properties in the new generated Error pseudo-class.
 
 ### getThrowableError
 
@@ -40,8 +50,6 @@ The new Error pseudo-class with type `ThrowableErrorConstructor<A, ThrowableErro
 | `CGR` | `CGR`: `DefaultConstructorGeneratorReturn` = `DefaultConstructorGeneratorReturn` | Return type of the mapperFn argument. |
 
 #### Examples
-
-This project is compatible with Typescript but can be used both as an ES module or CJS module.
 
 Note: The `ThrowableErrorConstructorArguments` type already includes the `originalError` property on its declaration.
 
