@@ -1,4 +1,7 @@
 # throwable-error
+
+[![NPM](https://img.shields.io/npm/v/throwable-error)](https://github.com/jduarter/throwable-error)
+
 🧨 Efficient, multi-inheritant, dynamically-generated, Error pseudo-classes with instanceof super-powers.
 
 This project is compatible with Typescript but can be used both as an ES module or CJS module.
