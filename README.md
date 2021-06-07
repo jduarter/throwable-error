@@ -1,5 +1,5 @@
 # throwable-error
-🧨 Efficient multi-inheritant Error objects
+🧨 Efficient, multi-inheritant, dynamically-generated, Error pseudo-classes with instanceof super-powers.
 
 
 ## Install
@@ -14,8 +14,7 @@ npm install --save throwable-error
 
 ▸ `Function` **getThrowableError**<N, A, CGR\>(`name`, `mapperFn`, `extendFrom?`)
 
-Get a dynamically-generated Error pseudo-class with
-instanceof super-powers.
+Get an efficient, multi-inheritant, dynamically-generated, Error pseudo-class with instanceof super-powers.
 
 #### Parameters
 
