@@ -80,3 +80,14 @@ const WebSocketJSONError = getThrowableError<
    WebSocketError,
   );
 ```
+
+Throwing these errors:
+
+```javascript
+throw new WebSocketError('Unable to connect');
+throw new WebSocketError('Unable to connect', { originalError: new Error('test') });
+
+throw new WebSocketJSONError('Unable to parse content');
+throw new WebSocketJSONError('Unable to parse content', { originalError: new Error('test') });
+throw new WebSocketJSONError('Unable to parse content', { data: '1234errorjsoncontent', originalError: new Error('test') });
+```
