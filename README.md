@@ -107,6 +107,7 @@ import {ThrowableError} from 'throwable-error';
 
 const testErr = new WebSocketJSONError('test');
 
+console.log(testErr instanceof WebSocketJSONError); # true
 console.log(testErr instanceof WebSocketError); # true
 console.log(testErr instanceof ThrowableError); # true
 ```
