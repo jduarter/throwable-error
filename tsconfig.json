@@ -31,7 +31,7 @@
     "strict": true
   },
   "include": ["src/"],
-  "exclude": ["docs/", "coverage-ts/", "build/", "types/", "node_modules/"],
+  "exclude": ["tests/", "docs/", "coverage-ts/", "build/", "types/", "node_modules/"],
   "typedocOptions": {
     "entryPoints": ["src/index.ts"],
     "out": "docs/"
