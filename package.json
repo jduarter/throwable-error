@@ -1,15 +1,17 @@
 {
   "name": "throwable-error",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Efficient multi-inheritant Error objects",
-  "repository": "https://github.com/jduarter/throwable-error",
+  "repository": "git@github.com:jduarter/throwable-error.git",
   "main": "build/lib.min.js",
   "types": "build/lib.d.ts",
   "module": "build/lib.esm.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "npx rollup -c",
-    "prepublishOnly": "rm -rf node_modules/ tsconfig.tsbuildinfo package-lock.json"
+    "prepublishOnly": "rm -rf node_modules/ package-lock.json",
+    "docs:md": "npx typedoc --plugin typedoc-plugin-markdown --out docs-md",
+    "docs": "npx typedoc"
   },
   "author": "Jorge Duarte Rodríguez <info@malagadev.com>",
   "license": "MIT",
@@ -21,6 +23,8 @@
     "rollup-plugin-terser": "^7.0.2",
     "tsc": "^2.0.3",
     "tslib": "^2.2.0",
-    "typescript": "^4.3.2"
+    "typedoc": "^0.20.36",
+    "typedoc-plugin-markdown": "^3.9.0",
+    "typescript": "^4.2.4"
   }
 }
