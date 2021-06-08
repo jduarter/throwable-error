@@ -4,7 +4,7 @@
 
 🧨 Efficient, multi-inheritant, dynamically-generated, Error pseudo-classes with instanceof super-powers.
 
-This project is compatible with Typescript but can be used both as an ES module or CJS module.
+This project is written in Typescript but can be used both as an ES module or CJS module.
 
 The API is still very complex and needs to be simplified, but it's effectively working for my purposes.
 
