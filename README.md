@@ -67,18 +67,16 @@ const WebSocketError = getThrowableError(
 Inheritant example (new error extending from `WebSocketError` in previous example:
 
 ```javascript
-const WebSocketJSONError = getThrowableError<
-  'WebSocketJSONError',
-  ThrowableErrorConstructorArguments & [string, { data: any }]
-  >(
-    'WebSocketJSONError',
-    (userMessage: string, details?: { originalError?: Error; data?: any }) => ({
+ type ErrConstrArgs = [string, { data: any }];
+
+ const WebSocketJSONError = getThrowableError<ErrConstrArgs>('WebSocketJSONError', {
+   mapperFn: (userMessage: string, details?: { originalError?: Error; data?: any }) => ({
       userMessage,
       originalError: details?.originalError || undefined,
       data: details?.data || undefined,
     }),
-   WebSocketError,
-  );
+  extendFrom: WebSocketError
+ });
 ```
 
 Throwing these errors is straightforward
