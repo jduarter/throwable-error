@@ -1,6 +1,6 @@
 {
   "name": "throwable-error",
-  "version": "0.0.3",
+  "version": "0.1.1",
   "description": "Efficient multi-inheritant Error objects",
   "repository": "git@github.com:jduarter/throwable-error.git",
   "main": "build/lib.min.js",
