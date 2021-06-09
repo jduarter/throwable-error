@@ -39,31 +39,15 @@ const simpleErrorTests = (
 };
 
 describe('getThrowableError', () => {
-  const TestErrClass = getThrowableError(
-    'TestError',
-    (userMessage) =>
-      ({
-        userMessage,
-      } as any),
-  );
+  const TestErrClass = getThrowableError('TestError');
 
-  const ChildTestErrClass = getThrowableError(
-    'ChildTestError',
-    (userMessage) =>
-      ({
-        userMessage,
-      } as any),
-    TestErrClass,
-  );
+  const ChildTestErrClass = getThrowableError('ChildTestError', {
+    extendFrom: TestErrClass,
+  });
 
-  const ChildChildTestErrClass = getThrowableError(
-    'ChildChildTestError',
-    (userMessage) =>
-      ({
-        userMessage,
-      } as any),
-    ChildTestErrClass,
-  );
+  const ChildChildTestErrClass = getThrowableError('ChildChildTestError', {
+    extendFrom: ChildTestErrClass,
+  });
 
   describe(' # simple error', () => {
     simpleErrorTests(TestErrClass, 'TestError');

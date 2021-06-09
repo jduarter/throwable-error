@@ -1,15 +1,7 @@
-export type ThrowableErrorConstructorArguments =
-  | [string]
-  | [string, { originalError?: Error }];
-
-export interface DefaultConstructorGeneratorReturn {
-  userMessage: string;
-  originalError: Error | unknown;
-}
-
-export type ThrowableErrorConstructor<A extends any[], C> = new (
-  ...args: A
-) => C;
+export type ThrowableErrorConstructor<
+  A extends readonly unknown[],
+  C extends Error = Error,
+> = new (...args: A) => C;
 
 export type OmitFromThrowableErrorForExtends =
   | 'captureStackTrace'
