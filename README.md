@@ -4,13 +4,11 @@
 
 🧨 Efficient, multi-inheritant, dynamically-generated, Error pseudo-classes with instanceof super-powers.
 
-This project is compatible with Typescript but can be used both as an ES module or CJS module.
-
-The API is still very complex and needs to be simplified, but it's effectively working for my purposes.
+This project is written with Typescript but can be used both as an ES module or CJS module.
 
 ## Notice
 
-This project is in beta stage, major API modifications and simplifications are very likely to occur on next major releases.
+This project is in beta stage, major API modifications and simplifications are very likely to occur in upcoming major releases.
 
 ## Install
 
@@ -28,29 +26,27 @@ npm install --save throwable-error
 
 ### getThrowableError
 
-▸ `Function` **getThrowableError**<N, A, CGR\>(`name`, `mapperFn`, `extendFrom?`)
+▸ `Function` **getThrowableError**(`name`, { `mapperFn?`, `extendFrom?` })
 
 Get an efficient, multi-inheritant, dynamically-generated, Error pseudo-class with instanceof super-powers.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `name` | `N` | Class name. |
-| `mapperFn` | `MapperFunctionType`<CGR, any\> | Mapper function for the constructor arguments. |
-| `extendFrom` | `ExtendFromType`<any, any\> | Class to extend from. |
+| Name         | Type                       | Description                                    |
+| :----------- | :------------------------- | :--------------------------------------------- |
+| `name`       | `string`                   | Class name.                                    |
+| `mapperFn`   | `MapperFunctionType`<any\> | Mapper function for the constructor arguments. |
+| `extendFrom` | `ExtendFromType`<any\>     | Class to extend from.                          |
 
 #### Returns
 
-The new Error pseudo-class with type `ThrowableErrorConstructor<A, ThrowableError<N>>`
+The new Error pseudo-class with type `ThrowableErrorConstructor<A, ThrowableError>`
 
 #### Type parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `N` | `N`: `string` = `string` | Name for the new Error. |
-| `A` | `A`: `ThrowableErrorConstructorArguments` = `ThrowableErrorConstructorArguments` | Constructor arguments. |
-| `CGR` | `CGR`: `DefaultConstructorGeneratorReturn` = `DefaultConstructorGeneratorReturn` | Return type of the mapperFn argument. |
+| Name | Type                                                                             | Description            |
+| :--- | :------------------------------------------------------------------------------- | :--------------------- |
+| `A`  | `A`: `ThrowableErrorConstructorArguments` = `ThrowableErrorConstructorArguments` | Constructor arguments. |
 
 #### Examples
 
@@ -59,7 +55,8 @@ Note: The `ThrowableErrorConstructorArguments` type already includes the `origin
 Simple example:
 
 ```javascript
-const WebSocketError = getThrowableError('WebSocketError',
+const WebSocketError = getThrowableError(
+  'WebSocketError',
   (userMessage: string, details?: { originalError?: Error }) => ({
     userMessage,
     originalError: details?.originalError || undefined,
@@ -90,16 +87,18 @@ Throwing these errors is straightforward
 throw new WebSocketError('Unable to connect');
 
 throw new WebSocketError('Unable to connect', {
-  originalError: new Error('test')
+  originalError: new Error('test'),
 });
 
 throw new WebSocketJSONError('Unable to parse content');
 
-throw new WebSocketJSONError('Unable to parse content', { originalError: new Error('test') });
+throw new WebSocketJSONError('Unable to parse content', {
+  originalError: new Error('test'),
+});
 
-throw new WebSocketJSONError('Unable to parse content', {
+throw new WebSocketJSONError('Unable to parse content', {
   data: '1234errorjsoncontent',
-  originalError: new Error('test')
+  originalError: new Error('test'),
 });
 ```
 
