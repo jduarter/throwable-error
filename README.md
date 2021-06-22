@@ -35,6 +35,12 @@ Get an efficient, multi-inheritant, dynamically-generated, Error pseudo-class wi
 | Name         | Type                       | Description                                    |
 | :----------- | :------------------------- | :--------------------------------------------- |
 | `name`       | `string`                   | Class name.                                    |
+| `options`    | `ThrowableErrorOptions`    | Options (check below).                         |
+
+#### Available options:
+
+| Name         | Type                       | Description                                    |
+| :----------- | :------------------------- | :--------------------------------------------- |
 | `mapperFn`   | `MapperFunctionType`<any\> | Mapper function for the constructor arguments. |
 | `extendFrom` | `ExtendFromType`<any\>     | Class to extend from.                          |
 
@@ -56,11 +62,7 @@ Simple example:
 
 ```javascript
 const WebSocketError = getThrowableError(
-  'WebSocketError',
-  (userMessage: string, details?: { originalError?: Error }) => ({
-    userMessage,
-    originalError: details?.originalError || undefined,
-  }),
+  'WebSocketError'
 );
 ```
 
